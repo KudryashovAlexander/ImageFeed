@@ -1,4 +1,0 @@
-
-enum ButtonImage: UIImage {
-    
-}
