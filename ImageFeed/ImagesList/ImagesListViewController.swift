@@ -24,7 +24,7 @@ class ImagesListViewController: UIViewController {
     }
     
     private func createBottonImage(with indexPath: IndexPath) -> UIImage {
-        let imageName = indexPath.row % 2 == 0 ?  "Active" : "NoActive"
+        let imageName = indexPath.row % 2 == 0 ?  "LikeActive" : "LikeNoActive"
         return UIImage(named: imageName) ?? UIImage()
     }
     
