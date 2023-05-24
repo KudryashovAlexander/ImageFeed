@@ -17,10 +17,9 @@ final class SingleImageViewController: UIViewController {
         
         super.viewDidLoad()
         imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
-        
         scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 1.25
+        scrollView.maximumZoomScale = 2.0
+        rescaleAndCenterImageInScrollView(image: image)
     }
     
     @IBAction private func didTapBackButton(_ sender: Any) {
@@ -30,24 +29,24 @@ final class SingleImageViewController: UIViewController {
     @IBAction private func didTapShareButton(_ sender: Any) {
         if let shareimage = imageView.image {
             let shareController = UIActivityViewController(activityItems: [shareimage], applicationActivities: nil)
-            present(shareController, animated: true)
+            present(shareController, animated: true, completion: nil)
         }
     }
     
     private func rescaleAndCenterImageInScrollView(image:UIImage) {
-        let minZommScale = scrollView.minimumZoomScale //  Минимальный масштаб зумирования
-        let maxZoomScale = scrollView.maximumZoomScale // Максимальный масштаб зумирования
-        view.layoutIfNeeded() //Обновляем экран если требуется
-        let visibleRectSize = scrollView.bounds.size // Размеры видимой части экрана (телефона)
-        let imageSize = image.size //Размеры экрана
-        let hScale = visibleRectSize.width / imageSize.width //Текущее соотношение высоты экрана к высоте картинки
-        let vScale = visibleRectSize.height / imageSize.height //Текущее соотношение ширины экрана к ширине картинки
-        let scale = min(maxZoomScale, max(minZommScale,min(hScale,vScale))) //минимальный масштаб
-
-        scrollView.setZoomScale(scale, animated: true) //Новое значение масштабирования
+        
+        let minZommScale = scrollView.minimumZoomScale
+        let maxZoomScale = scrollView.maximumZoomScale
+        view.layoutIfNeeded()
+        let visibleRectSize = scrollView.bounds.size
+        let imageSize = image.size
+        let hScale = visibleRectSize.width / imageSize.width
+        let vScale = visibleRectSize.height / imageSize.height
+        let scale = min(maxZoomScale, max(minZommScale,max(hScale,vScale)))
+        scrollView.setZoomScale(scale, animated: true)
         scrollView.layoutIfNeeded()
-        let newContentSize = scrollView.contentSize // Размер представления содержимого
-        let x = (newContentSize.width - visibleRectSize.width) / 2 //
+        let newContentSize = scrollView.contentSize
+        let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }

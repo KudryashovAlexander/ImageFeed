@@ -9,10 +9,11 @@ class ProfileViewController: UIViewController {
     private var logoutButton = UIButton()
     
     
-    private var accountProfile = AccountModel(photo: UIImage(named: "profile_photo") ?? UIImage(),
-                                              name: "Екатерина Новикова",
-                                              login: "@ekaterina_nov",
-                                              description: "Hello, world!")
+    private var accountProfile = AccountModel(
+        photo: UIImage(named: "profile_photo") ?? UIImage(),
+        name: "Екатерина Новикова",
+        login: "@ekaterina_nov",
+        description: "Hello, world!")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,11 @@ class ProfileViewController: UIViewController {
     }
     
     private func createAvatarImageView(image: UIImage) {
-        
         avatarImageView.image = image
-        
+        avatarImageView.layer.cornerRadius = 16
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatarImageView)
+        
         NSLayoutConstraint.activate([
             avatarImageView.heightAnchor.constraint(equalToConstant: 70),
             avatarImageView.widthAnchor.constraint(equalToConstant: 70),
@@ -42,10 +43,7 @@ class ProfileViewController: UIViewController {
     private func createNameLabel(name: String) {
         nameLabel.text = name
         nameLabel.textColor = .ypWhite
-        
-        //FIXME: - Поправить шрифт!
-        
-        nameLabel.font = UIFont.systemFont(ofSize: 23)
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
@@ -59,8 +57,6 @@ class ProfileViewController: UIViewController {
     private func createLoginNameLabel(login: String) {
         loginNameLabel.text = login
         loginNameLabel.textColor = .ypGray
-        
-        //FIXME: - Поправить шрифт!
         loginNameLabel.font = UIFont.systemFont(ofSize: 13)
         loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginNameLabel)
@@ -70,15 +66,11 @@ class ProfileViewController: UIViewController {
             loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor)
         ])
         
-    
-        
     }
     
     private func createDescriptionLabel(descrption: String) {
         descriptionLabel.text = descrption
         descriptionLabel.textColor = .ypWhite
-        
-        //FIXME: - Поправить шрифт!
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
@@ -95,10 +87,9 @@ class ProfileViewController: UIViewController {
         logoutButton.setImage(image, for: .normal)
         logoutButton.addTarget(self, action: #selector (self.didTapLogoutButton), for: .touchUpInside)
         logoutButton.imageView?.tintColor = .ypRed
-        
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(logoutButton)
+        
         NSLayoutConstraint.activate([
             logoutButton.widthAnchor.constraint(equalToConstant: 44),
             logoutButton.heightAnchor.constraint(equalToConstant: 44),
@@ -107,7 +98,6 @@ class ProfileViewController: UIViewController {
         ])
         
     }
-    
     
     @objc
     private func didTapLogoutButton() {

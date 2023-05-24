@@ -137,18 +137,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AO6-6A-nnt">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AO6-6A-nnt">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="7e6-Uy-hHe">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="132"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="7e6-Uy-hHe" firstAttribute="leading" secondItem="vW4-pv-ZOe" secondAttribute="leading" id="8MG-s0-uLw"/>
-                                    <constraint firstItem="vW4-pv-ZOe" firstAttribute="bottom" secondItem="7e6-Uy-hHe" secondAttribute="bottom" id="Fzc-Ny-KfI"/>
-                                    <constraint firstItem="7e6-Uy-hHe" firstAttribute="top" secondItem="vW4-pv-ZOe" secondAttribute="top" id="mff-wH-LZA"/>
-                                    <constraint firstItem="vW4-pv-ZOe" firstAttribute="trailing" secondItem="7e6-Uy-hHe" secondAttribute="trailing" id="zgm-fG-xZ2"/>
+                                    <constraint firstItem="7e6-Uy-hHe" firstAttribute="top" secondItem="AO6-6A-nnt" secondAttribute="top" id="KHp-es-neQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="7e6-Uy-hHe" secondAttribute="bottom" id="StP-M5-7lv"/>
+                                    <constraint firstAttribute="trailing" secondItem="7e6-Uy-hHe" secondAttribute="trailing" id="gDe-9F-3b4"/>
+                                    <constraint firstItem="7e6-Uy-hHe" firstAttribute="leading" secondItem="AO6-6A-nnt" secondAttribute="leading" id="y2I-uV-rc4"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="vRM-S8-Oa8"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="vW4-pv-ZOe"/>
