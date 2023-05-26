@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7F1D9FDC2A0A6F5D00E3B8E4 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D9FDB2A0A6F5D00E3B8E4 /* ImagesListCell.swift */; };
+		7F1D9FE52A12BCFF00E3B8E4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D9FE42A12BCFF00E3B8E4 /* ProfileViewController.swift */; };
+		7F1D9FE82A1420E300E3B8E4 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1D9FE72A1420E300E3B8E4 /* SingleImageViewController.swift */; };
+		7F55CC5E2A1A725D00DD25BE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F55CC5D2A1A725D00DD25BE /* AccountModel.swift */; };
 		7FC495282A04440E005DAB25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC495272A04440E005DAB25 /* AppDelegate.swift */; };
 		7FC4952A2A04440E005DAB25 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC495292A04440E005DAB25 /* SceneDelegate.swift */; };
 		7FC4952C2A04440E005DAB25 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4952B2A04440E005DAB25 /* ImagesListViewController.swift */; };
@@ -19,6 +22,9 @@
 
 /* Begin PBXFileReference section */
 		7F1D9FDB2A0A6F5D00E3B8E4 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		7F1D9FE42A12BCFF00E3B8E4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		7F1D9FE72A1420E300E3B8E4 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		7F55CC5D2A1A725D00DD25BE /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		7FC495242A04440E005DAB25 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC495272A04440E005DAB25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FC495292A04440E005DAB25 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +56,30 @@
 			path = ImagesList;
 			sourceTree = "<group>";
 		};
+		7F1D9FE62A14209F00E3B8E4 /* Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				7F1D9FE42A12BCFF00E3B8E4 /* ProfileViewController.swift */,
+			);
+			path = "Profile View";
+			sourceTree = "<group>";
+		};
+		7F1D9FE92A1424CF00E3B8E4 /* SingleImageView */ = {
+			isa = PBXGroup;
+			children = (
+				7F1D9FE72A1420E300E3B8E4 /* SingleImageViewController.swift */,
+			);
+			path = SingleImageView;
+			sourceTree = "<group>";
+		};
+		7F55CC5F2A1A728600DD25BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F55CC5D2A1A725D00DD25BE /* AccountModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7FC4951B2A04440E005DAB25 = {
 			isa = PBXGroup;
 			children = (
@@ -69,8 +99,11 @@
 		7FC495262A04440E005DAB25 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				7F55CC5F2A1A728600DD25BE /* Model */,
+				7F1D9FE92A1424CF00E3B8E4 /* SingleImageView */,
 				7F1D9FDD2A0A6F8A00E3B8E4 /* ImagesList */,
 				7FC4953B2A064CE3005DAB25 /* Helpers */,
+				7F1D9FE62A14209F00E3B8E4 /* Profile View */,
 				7FC495272A04440E005DAB25 /* AppDelegate.swift */,
 				7FC495292A04440E005DAB25 /* SceneDelegate.swift */,
 				7FC4952D2A04440E005DAB25 /* Main.storyboard */,
@@ -160,8 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F1D9FE52A12BCFF00E3B8E4 /* ProfileViewController.swift in Sources */,
 				7FC4952C2A04440E005DAB25 /* ImagesListViewController.swift in Sources */,
 				7FC495282A04440E005DAB25 /* AppDelegate.swift in Sources */,
+				7F55CC5E2A1A725D00DD25BE /* AccountModel.swift in Sources */,
+				7F1D9FE82A1420E300E3B8E4 /* SingleImageViewController.swift in Sources */,
 				7F1D9FDC2A0A6F5D00E3B8E4 /* ImagesListCell.swift in Sources */,
 				7FC4952A2A04440E005DAB25 /* SceneDelegate.swift in Sources */,
 				7FC4953D2A064D09005DAB25 /* UIColor+Extension.swift in Sources */,
