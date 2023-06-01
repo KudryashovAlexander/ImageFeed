@@ -12,7 +12,9 @@ fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authori
 
 final class WebViewViewController: UIViewController {
     
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var webView: WKWebView!
+    
     
     weak var delegate: WebViewViewControllerDelegate?
     
