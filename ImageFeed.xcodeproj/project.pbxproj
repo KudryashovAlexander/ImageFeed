@@ -18,6 +18,10 @@
 		7FC495312A044410005DAB25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FC495302A044410005DAB25 /* Assets.xcassets */; };
 		7FC495342A044410005DAB25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FC495322A044410005DAB25 /* LaunchScreen.storyboard */; };
 		7FC4953D2A064D09005DAB25 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4953C2A064D09005DAB25 /* UIColor+Extension.swift */; };
+		7FE934C32A222FED00DC0D68 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C22A222FED00DC0D68 /* Constants.swift */; };
+		7FE934C62A268F1E00DC0D68 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C52A268F1E00DC0D68 /* WebViewViewController.swift */; };
+		7FE934C82A269A0500DC0D68 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C72A269A0500DC0D68 /* AuthViewController.swift */; };
+		7FE934CA2A2912B500DC0D68 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C92A2912B500DC0D68 /* WebViewViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		7FC495332A044410005DAB25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FC495352A044410005DAB25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FC4953C2A064D09005DAB25 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		7FE934C22A222FED00DC0D68 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7FE934C52A268F1E00DC0D68 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		7FE934C72A269A0500DC0D68 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		7FE934C92A2912B500DC0D68 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 		7FC495262A04440E005DAB25 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				7FE934C42A268F0800DC0D68 /* Auth */,
 				7F55CC5F2A1A728600DD25BE /* Model */,
 				7F1D9FE92A1424CF00E3B8E4 /* SingleImageView */,
 				7F1D9FDD2A0A6F8A00E3B8E4 /* ImagesList */,
@@ -118,8 +127,19 @@
 				7FC4953C2A064D09005DAB25 /* UIColor+Extension.swift */,
 				7FC495302A044410005DAB25 /* Assets.xcassets */,
 				7FC495322A044410005DAB25 /* LaunchScreen.storyboard */,
+				7FE934C22A222FED00DC0D68 /* Constants.swift */,
+				7FE934C92A2912B500DC0D68 /* WebViewViewControllerDelegate.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		7FE934C42A268F0800DC0D68 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				7FE934C52A268F1E00DC0D68 /* WebViewViewController.swift */,
+				7FE934C72A269A0500DC0D68 /* AuthViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FE934C82A269A0500DC0D68 /* AuthViewController.swift in Sources */,
+				7FE934C62A268F1E00DC0D68 /* WebViewViewController.swift in Sources */,
 				7F1D9FE52A12BCFF00E3B8E4 /* ProfileViewController.swift in Sources */,
 				7FC4952C2A04440E005DAB25 /* ImagesListViewController.swift in Sources */,
 				7FC495282A04440E005DAB25 /* AppDelegate.swift in Sources */,
@@ -200,7 +222,9 @@
 				7F1D9FE82A1420E300E3B8E4 /* SingleImageViewController.swift in Sources */,
 				7F1D9FDC2A0A6F5D00E3B8E4 /* ImagesListCell.swift in Sources */,
 				7FC4952A2A04440E005DAB25 /* SceneDelegate.swift in Sources */,
+				7FE934CA2A2912B500DC0D68 /* WebViewViewControllerDelegate.swift in Sources */,
 				7FC4953D2A064D09005DAB25 /* UIColor+Extension.swift in Sources */,
+				7FE934C32A222FED00DC0D68 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
