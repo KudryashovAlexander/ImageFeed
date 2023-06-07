@@ -10,11 +10,17 @@ import WebKit
 
 fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}
+
+
 final class WebViewViewController: UIViewController {
     
+    // MARK: Outlets
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var webView: WKWebView!
-    
     
     weak var delegate: WebViewViewControllerDelegate?
     
@@ -22,7 +28,30 @@ final class WebViewViewController: UIViewController {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
+        loadAutorization()
         
+        updateProgress()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        webView.addObserver(
+            self,
+            forKeyPath: #keyPath(WKWebView.estimatedProgress),
+            options: .new,
+            context: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webView.removeObserver(
+            self,
+            forKeyPath:#keyPath(WKWebView.estimatedProgress),
+            context: nil)
+    }
+    
+    private func loadAutorization() {
         var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: AccessKey),
@@ -56,26 +85,7 @@ final class WebViewViewController: UIViewController {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        webView.addObserver(
-            self,
-            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-            options: .new,
-            context: nil)
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        webView.removeObserver(
-            self,
-            forKeyPath:#keyPath(WKWebView.estimatedProgress),
-            context: nil)
-        
-    }
-    
+
 }
 
 //MARK: - Extension WKNavigationDelegate
