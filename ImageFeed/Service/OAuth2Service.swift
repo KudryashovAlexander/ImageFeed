@@ -40,6 +40,7 @@ final class OAuth2Service {
 }
 
 extension OAuth2Service {
+    
     private func object(
         for request: URLRequest,
         completion: @escaping (Result <OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
@@ -53,6 +54,7 @@ extension OAuth2Service {
                 completion(response)
             }
         }
+    
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"

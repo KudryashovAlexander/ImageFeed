@@ -19,14 +19,11 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //TODO: Написать метод для проверки авторизации пользователя
         if oauth2TokenStorage.token != nil {
-            //Метод перехода на табБарконтроллер
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: seguaShowAutorization, sender: nil)
         }
-        
     }
     
     private func switchToTabBarController() {
