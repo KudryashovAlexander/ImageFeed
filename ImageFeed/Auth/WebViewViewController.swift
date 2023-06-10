@@ -19,8 +19,8 @@ protocol WebViewViewControllerDelegate: AnyObject {
 final class WebViewViewController: UIViewController {
     
     // MARK: Outlets
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet private weak var progressView: UIProgressView!
+    @IBOutlet private weak var webView: WKWebView!
     
     weak var delegate: WebViewViewControllerDelegate?
     
