@@ -8,21 +8,37 @@ class ProfileViewController: UIViewController {
     private var descriptionLabel = UILabel()
     private var logoutButton = UIButton()
     
-    
-    private var accountProfile = AccountModel(
-        photo: UIImage(named: "profile_photo") ?? UIImage(),
-        name: "Екатерина Новикова",
-        login: "@ekaterina_nov",
-        description: "Hello, world!")
+    private let profileService = ProfileService()
+    private var accountProfile: Profile?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createAvatarImageView(image: accountProfile.photo)
-        createNameLabel(name: accountProfile.name)
-        createLoginNameLabel(login: accountProfile.login)
-        createDescriptionLabel(descrption: accountProfile.description)
+        loadProfile()
+        createAvatarImageView(image: UIImage(named: "profile_photo") ?? UIImage())
+        createNameLabel(name: accountProfile?.name ?? "")
+        createLoginNameLabel(login: accountProfile?.loginName ?? "")
+        createDescriptionLabel(descrption: accountProfile?.bio ?? "")
         createLogoutButton()
 
+    }
+    
+    private func loadProfile() {
+        if let token = OAuth2TokenStorage().token {
+
+            profileService.fetchProfile(token) { [weak self] result in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case (.success(let profile)):
+                        self.accountProfile = profile
+                    case(.failure(let error)):
+                        print(error)
+                    }
+                }
+                
+            }
+        }
     }
     
     private func createAvatarImageView(image: UIImage) {
