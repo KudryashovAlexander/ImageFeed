@@ -10,9 +10,9 @@ struct Profile {
     var username: String
     var name: String
     var loginName: String
-    var bio: String
+    var bio: String?
     
-    init(username: String, firstName: String, lastName: String,loginName: String, bio: String) {
+    init(username: String, firstName: String, lastName: String,loginName: String, bio: String?) {
         self.username = username
         self.name = firstName + " " + lastName
         self.loginName = "@" + loginName

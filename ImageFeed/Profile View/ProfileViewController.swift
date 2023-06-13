@@ -16,9 +16,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         loadProfile()
         createAvatarImageView(image: UIImage(named: "profile_photo") ?? UIImage())
-        createNameLabel(name: accountProfile?.name ?? "")
-        createLoginNameLabel(login: accountProfile?.loginName ?? "")
-        createDescriptionLabel(descrption: accountProfile?.bio ?? "")
+        createNameLabel(name: "нет данных")
+        createLoginNameLabel(login: "нет данных")
+        createDescriptionLabel(descrption: "нет данных")
         createLogoutButton()
 
     }
@@ -35,10 +35,14 @@ class ProfileViewController: UIViewController {
                     case(.failure(let error)):
                         print(error)
                     }
+                    self.nameLabel.text = self.accountProfile?.name
+                    self.loginNameLabel.text = self.accountProfile?.loginName
+                    self.descriptionLabel.text = self.accountProfile?.bio
                 }
                 
             }
         }
+        
     }
     
     private func createAvatarImageView(image: UIImage) {
