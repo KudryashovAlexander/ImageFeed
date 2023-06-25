@@ -8,6 +8,9 @@
 import UIKit
 
 final class ProfileService {
+    static let shared = ProfileService()
+    private let urlSession = URLSession.shared
+    private(set) var profile: Profile?
     
     private enum NetWorkError: Error {
         case codeError
@@ -17,39 +20,33 @@ final class ProfileService {
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         
-        let url = DefaultProfileURL
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        var request = URLRequest.makeHTTPRequest(
+            path: "/me",
+            httpMethod: "GET"
+        )
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         currentTask?.cancel()
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult,Error>) in
+            guard let self else { return }
             
-            if let response = response as? HTTPURLResponse,
-               response.statusCode < 200 || response.statusCode >= 300 {
-                completion(.failure(NetWorkError.codeError))
-                return
-            }
-            
-            guard let data = data else { return }
-            do {
-                let profileResult = try JSONDecoder().decode(ProfileResult.self, from: data)
-                let profile = Profile(username: profileResult.userName,
-                                      firstName: profileResult.firstName,
-                                      lastName: profileResult.lastName,
-                                      loginName: profileResult.userName,
-                                      bio: profileResult.bio)
-                completion(.success(profile))
-            } catch {
-                completion(.failure(error))
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profileResult):
+                    let profile = Profile(username: profileResult.userName,
+                                          firstName: profileResult.firstName,
+                                          lastName: profileResult.lastName,
+                                          loginName: profileResult.userName,
+                                          bio: profileResult.bio)
+                    completion (.success(profile))
+                case .failure(let error):
+                    completion(.failure(error))
+                    
+                }
             }
         }
+        
         currentTask = task
         currentTask?.resume()
     }
-    
 }

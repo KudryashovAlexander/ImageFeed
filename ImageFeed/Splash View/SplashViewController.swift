@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController {
     private let seguaShowAutorization = "ShowAuthenticationScreenSegueIdentifier"
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
+    private let profileService = ProfileService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if oauth2TokenStorage.token != nil {
+            loadProfile()
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: seguaShowAutorization, sender: nil)
@@ -63,12 +65,35 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
+                self.loadProfile()
                 self.switchToTabBarController()
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
                 // TODO: [Sprint 11]
                 break
+            }
+        }
+    }
+}
+
+extension SplashViewController {
+    private func loadProfile() {
+        if let token = OAuth2TokenStorage().token {
+            
+            profileService.fetchProfile(token) { [weak self] result in
+                //TODO:  Следующая строка возвращает нил
+//                guard let self = self else { return }
+                switch result {
+                case (.success(let profile)):
+                    ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
+                    UIBlockingProgressHUD.dismiss()
+                    
+                case(.failure(let error)):
+                    print(error)
+                    UIBlockingProgressHUD.dismiss()
+                    //TODO: Напиать метод обработки ошибки
+                }
             }
         }
     }

@@ -40,3 +40,36 @@ extension URLSession {
         return task
 }
 }
+
+extension URLSession {
+    func objectTask<T:Decodable>(
+        for request: URLRequest,
+            completion: @escaping (Result <T,Error>) -> Void
+        ) -> URLSessionTask {
+            let task = dataTask(with: request, completionHandler: {data, response, error in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    if let response = response as? HTTPURLResponse,
+                       response.statusCode < 200 || response.statusCode >= 300 {
+                        completion(.failure(NetWorkError.httpStatusCode(response.statusCode)))
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    do {
+                        let decoder = JSONDecoder()
+                        let decodedData = try decoder.decode(T.self, from: data)
+                        completion(.success(decodedData))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            })
+            return task
+        }
+    }
+

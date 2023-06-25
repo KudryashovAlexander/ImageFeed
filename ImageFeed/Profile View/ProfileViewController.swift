@@ -7,42 +7,51 @@ class ProfileViewController: UIViewController {
     private var loginNameLabel = UILabel()
     private var descriptionLabel = UILabel()
     private var logoutButton = UIButton()
+    private let profileService = ProfileService.shared
     
-    private let profileService = ProfileService()
-    private var accountProfile: Profile?
+    private var profileImageServiceObserver: NSObjectProtocol?
 
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadProfile()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+        
+
         createAvatarImageView(image: UIImage(named: "profile_photo") ?? UIImage())
         createNameLabel(name: "нет данных")
         createLoginNameLabel(login: "нет данных")
         createDescriptionLabel(descrption: "нет данных")
         createLogoutButton()
-
+        
+        if let profile = profileService.profile {
+                self.updateProfileDetails(profile: profile)
+        }
     }
     
-    private func loadProfile() {
-        if let token = OAuth2TokenStorage().token {
-
-            profileService.fetchProfile(token) { [weak self] result in
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    switch result {
-                    case (.success(let profile)):
-                        self.accountProfile = profile
-                    case(.failure(let error)):
-                        print(error)
-                    }
-                    self.nameLabel.text = self.accountProfile?.name
-                    self.loginNameLabel.text = self.accountProfile?.loginName
-                    self.descriptionLabel.text = self.accountProfile?.bio
-                }
-                
-            }
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+    }
+    
+    private func updateProfileDetails(profile: Profile) {
+        DispatchQueue.main.async {
+            self.nameLabel.text = profile.name
+            self.loginNameLabel.text = profile.loginName
+            self.descriptionLabel.text = profile.bio
         }
-        
     }
     
     private func createAvatarImageView(image: UIImage) {
