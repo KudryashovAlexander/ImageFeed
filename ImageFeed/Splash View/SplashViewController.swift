@@ -70,7 +70,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                // TODO: [Sprint 11]
+                self.showAlert()
                 break
             }
         }
@@ -83,7 +83,7 @@ extension SplashViewController {
             
             profileService.fetchProfile(token) { [weak self] result in
                 //TODO:  Следующая строка возвращает нил
-//                guard let self = self else { return }
+//                guard let self else { return }
                 switch result {
                 case (.success(let profile)):
                     ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
@@ -96,5 +96,30 @@ extension SplashViewController {
                 }
             }
         }
+    }
+    
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default){[weak self] _ in
+            self?.showAuthViewController()
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showAuthViewController() {
+        
+            let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            guard let window = authViewController.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+            else {
+                assertionFailure("Ошибка инициализации AuthViewController")
+                return
+            }
+            window.delegate = self
+            window.modalPresentationStyle = .fullScreen
+            present(window, animated: true)
     }
 }
