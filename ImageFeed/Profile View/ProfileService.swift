@@ -38,10 +38,10 @@ final class ProfileService {
                                           lastName: profileResult.lastName,
                                           loginName: profileResult.userName,
                                           bio: profileResult.bio)
+                    self.profile = profile
                     completion (.success(profile))
                 case .failure(let error):
                     completion(.failure(error))
-                    
                 }
             }
         }

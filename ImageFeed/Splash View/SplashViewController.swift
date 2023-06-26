@@ -81,9 +81,8 @@ extension SplashViewController {
     private func loadProfile() {
         if let token = OAuth2TokenStorage().token {
             
-            profileService.fetchProfile(token) { [weak self] result in
-                //TODO:  Следующая строка возвращает нил
-//                guard let self else { return }
+            profileService.fetchProfile(token) { result in
+
                 switch result {
                 case (.success(let profile)):
                     ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }

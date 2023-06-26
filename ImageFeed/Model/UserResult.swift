@@ -12,8 +12,10 @@ struct UserResult: Codable {
     enum CodingKeys: String, CodingKey {
         case profileImage = "profile_image"
     }
+    
+    struct ProfileImage: Codable {
+        let small: String
+    }
 }
 
-struct ProfileImage: Codable {
-    let small: String
-}
+

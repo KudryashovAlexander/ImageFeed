@@ -16,6 +16,6 @@ struct ProfileResult: Codable {
         case userName = "username"
         case firstName = "first_name"
         case lastName = "last_name"
-        case bio = "bio"
+        case bio
     }
 }

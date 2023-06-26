@@ -5,13 +5,17 @@
 //  Created by Александр Кудряшов on 21.06.2023.
 //
 
-import Foundation
+import UIKit
+
 final class ProfileImageService {
     
     static let shared = ProfileImageService()
     let urlSession = URLSession.shared
     private (set) var avatarURL: String?
+    
+    private var avatarImage = UIImageView()
     private var currentTask: URLSessionTask?
+    
     
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
@@ -36,6 +40,7 @@ final class ProfileImageService {
                     
                 case .success(let userResult):
                     let userImage = userResult.profileImage.small
+//                    print(userImage)
                     self.avatarURL = userImage
                     completion(.success(userImage))
                     

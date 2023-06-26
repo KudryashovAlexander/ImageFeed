@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     
@@ -23,19 +24,16 @@ class ProfileViewController: UIViewController {
             ) { [weak self] _ in
                 guard let self = self else { return }
                 self.updateAvatar()
+                self.updateProfileDetails(profile: self.profileService.profile)
             }
         updateAvatar()
+        updateProfileDetails(profile: profileService.profile)
         
-
-        createAvatarImageView(image: UIImage(named: "profile_photo") ?? UIImage())
+        createAvatarImageView(image: UIImage(named: "placeholder.jpg") ?? UIImage())
         createNameLabel(name: "нет данных")
         createLoginNameLabel(login: "нет данных")
         createDescriptionLabel(descrption: "нет данных")
         createLogoutButton()
-        
-        if let profile = profileService.profile {
-                self.updateProfileDetails(profile: profile)
-        }
     }
     
     private func updateAvatar() {
@@ -43,14 +41,21 @@ class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 16)
+        avatarImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "placeholder.jpg"),
+                options: [.processor(processor)])
     }
     
-    private func updateProfileDetails(profile: Profile) {
-        DispatchQueue.main.async {
-            self.nameLabel.text = profile.name
-            self.loginNameLabel.text = profile.loginName
-            self.descriptionLabel.text = profile.bio
+    private func updateProfileDetails(profile: Profile?) {
+        if let profile = profile {
+            DispatchQueue.main.async {
+                self.nameLabel.text = profile.name
+                self.loginNameLabel.text = profile.loginName
+                self.descriptionLabel.text = profile.bio
+            }
         }
     }
     
