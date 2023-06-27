@@ -10,22 +10,26 @@ import ProgressHUD
 
 final class SplashViewController: UIViewController {
     
-    private let seguaShowAutorization = "ShowAuthenticationScreenSegueIdentifier"
+    private var logoImageView = UIImageView()
+
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
     private let profileService = ProfileService.shared
+    private let xlock = NSLock()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .ypBlack
+        createLogo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        UIBlockingProgressHUD.show()
         if oauth2TokenStorage.token != nil {
             loadProfile()
-            switchToTabBarController()
         } else {
-            performSegue(withIdentifier: seguaShowAutorization, sender: nil)
+            showAuthViewController()
         }
     }
     
@@ -36,19 +40,6 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
     
-}
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == seguaShowAutorization {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(seguaShowAutorization)") }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
@@ -66,10 +57,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success:
                 self.loadProfile()
-                self.switchToTabBarController()
-                UIBlockingProgressHUD.dismiss()
             case .failure:
-                UIBlockingProgressHUD.dismiss()
                 self.showAlert()
                 break
             }
@@ -87,21 +75,24 @@ extension SplashViewController {
                 case (.success(let profile)):
                     ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
                     UIBlockingProgressHUD.dismiss()
-                    
+                    self.switchToTabBarController()
+
                 case(.failure(let error)):
                     print(error)
                     UIBlockingProgressHUD.dismiss()
-                    //TODO: Напиать метод обработки ошибки
+                    self.showAlert()
                 }
             }
         }
     }
     
     private func showAlert() {
+        UIBlockingProgressHUD.dismiss()
         let alert = UIAlertController(
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
             preferredStyle: .alert)
+
         let action = UIAlertAction(title: "OK", style: .default){[weak self] _ in
             self?.showAuthViewController()
         }
@@ -110,15 +101,29 @@ extension SplashViewController {
     }
     
     private func showAuthViewController() {
-        
-            let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            guard let window = authViewController.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+        if oauth2TokenStorage.token != nil {
+            loadProfile()
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: .main)
+            guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
             else {
-                assertionFailure("Ошибка инициализации AuthViewController")
+                assertionFailure("Ошибка: AuthViewController")
                 return
             }
-            window.delegate = self
-            window.modalPresentationStyle = .fullScreen
-            present(window, animated: true)
+            authViewController.delegate = self
+            authViewController.modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true, completion: nil)
+        }
+    }
+}
+
+//MARK: - Extension 11 sprint - верстка кодом
+extension SplashViewController {
+    func createLogo() {
+        logoImageView.center = view.center
+        logoImageView.image = UIImage(named: "Logo_of_Unsplash")
+        logoImageView.backgroundColor = .ypBlack
+        logoImageView.contentMode = .scaleAspectFit
+        view.addSubview(logoImageView)
     }
 }
