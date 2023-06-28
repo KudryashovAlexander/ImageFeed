@@ -112,9 +112,9 @@
 		7F55CC5F2A1A728600DD25BE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7F2E93E12A36FC6A0052639F /* ProfileResult.swift */,
 				7FE934CB2A2B8A5B00DC0D68 /* OAuthTokenResponseBody.swift */,
 				7F2E93E32A36FE7F0052639F /* Profile.swift */,
+				7F2E93E12A36FC6A0052639F /* ProfileResult.swift */,
 				7F0336E72A424BCF00004BF2 /* UserResult.swift */,
 			);
 			path = Model;

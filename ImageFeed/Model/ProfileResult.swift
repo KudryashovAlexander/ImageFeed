@@ -9,7 +9,7 @@ import Foundation
 struct ProfileResult: Codable {
     var userName: String
     var firstName: String
-    var lastName: String
+    var lastName: String?
     var bio: String?
     
     enum CodingKeys: String, CodingKey {

@@ -136,6 +136,7 @@ class ProfileViewController: UIViewController {
     @objc
     private func didTapLogoutButton() {
         print("Logout Press")
+        OAuth2TokenStorage().deleteToken()
     }
     
 }

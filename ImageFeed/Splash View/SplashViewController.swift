@@ -26,14 +26,16 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIBlockingProgressHUD.show()
-        if oauth2TokenStorage.token != nil {
-            loadProfile()
+        if let token = oauth2TokenStorage.token {
+            loadProfile(token)
         } else {
             showAuthViewController()
         }
     }
     
     private func switchToTabBarController() {
+        UIBlockingProgressHUD.dismiss()
+
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
@@ -55,8 +57,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.loadProfile()
+            case .success(let authToken):
+                self.loadProfile(authToken)
             case .failure:
                 self.showAlert()
                 break
@@ -66,24 +68,20 @@ extension SplashViewController: AuthViewControllerDelegate {
 }
 
 extension SplashViewController {
-    private func loadProfile() {
-        if let token = OAuth2TokenStorage().token {
+    private func loadProfile(_ token: String ) {
             
             profileService.fetchProfile(token) { result in
 
                 switch result {
                 case (.success(let profile)):
                     ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
-                    UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
 
                 case(.failure(let error)):
                     print(error)
-                    UIBlockingProgressHUD.dismiss()
                     self.showAlert()
                 }
             }
-        }
     }
     
     private func showAlert() {
@@ -101,8 +99,9 @@ extension SplashViewController {
     }
     
     private func showAuthViewController() {
-        if oauth2TokenStorage.token != nil {
-            loadProfile()
+        UIBlockingProgressHUD.dismiss()
+        if let token = oauth2TokenStorage.token {
+            loadProfile(token)
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: .main)
             guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
