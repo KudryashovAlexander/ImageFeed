@@ -5,6 +5,7 @@ final class ImagesListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map { "\($0)" }
+    private let imageListService = ImagesListService.shared
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
@@ -89,5 +90,23 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
 }
+//MARK: - Extension sprint 12
+/*
+extension ImagesListViewController {
+    //вызывается прямо перед тем, как ячейка таблицы будет показана на экране.
+    func tableView(
+      _ tableView: UITableView,
+      willDisplay cell: UITableViewCell,
+      forRowAt indexPath: IndexPath
+    ) {
+        if indexPath.row + 1 == imageListService.photos.count {
+            imageListService.fetchPhotosNextPage()
+            //Отметим, что этот метод может вызываться для одной и той же ячейки множество раз (иногда десятки раз). Поэтому нужно сделать так, чтобы многократные вызовы fetchPhotosNextPage() были «дешёвыми» по ресурсам и не приводили к прерыванию текущего сетевого запроса.
+        }
+        
+        // ...
+    }
+}
+ */
 
 
