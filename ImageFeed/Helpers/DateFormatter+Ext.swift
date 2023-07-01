@@ -17,4 +17,12 @@ extension Date {
             return nil
         }
     }
+    
+    func stringFromDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM YYYY"
+        return dateFormatter.string(from: self)
+    }
+
 }

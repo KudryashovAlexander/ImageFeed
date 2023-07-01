@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     
@@ -15,6 +16,13 @@ final class ImagesListCell: UITableViewCell {
         gradientImageView.clipsToBounds = true
         gradientImageView.layer.cornerRadius = 16
         gradientImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+//         Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
+        cellImage.kf.cancelDownloadTask()
     }
     
 }

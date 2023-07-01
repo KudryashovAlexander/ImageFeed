@@ -1,29 +1,30 @@
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private let photosName: [String] = Array(0..<20).map { "\($0)" }
-    private let imageListService = ImagesListService.shared
+    private let imageListService = ImagesListService()
+    private var photos = [Photo]()
+    private var imageListServiceObserver: NSObjectProtocol?
+
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "dd MMMM YYYY"
-        return dateFormatter
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-    }
-    
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let image = UIImage(named: "\(indexPath.row)") ?? UIImage()
-        cell.cellImage.image = image
+        imageListService.fetchPhotosNextPage()
+        imageListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateTableViewAnimated()
+            }
     }
     
     private func createBottonImage(with indexPath: IndexPath) -> UIImage {
@@ -36,7 +37,9 @@ final class ImagesListViewController: UIViewController {
             guard let viewController = segue.destination as? SingleImageViewController,
                   let indexPath = sender as? IndexPath
             else { return }
-            let image = UIImage(named: photosName[indexPath.row])
+            
+//TODO: - Метод неправильный - Нужно как то вытащить картинку из cell
+            let image = UIImage(named: photos[indexPath.row].thumbImageURL)
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
@@ -49,7 +52,7 @@ final class ImagesListViewController: UIViewController {
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,10 +61,22 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
+                
+        if let url = URL(string: photos[indexPath.row].thumbImageURL),
+        let cellImageView = imageListCell.cellImage {
+            
+            cellImageView.kf.indicatorType = .activity
+            let processor = RoundCornerImageProcessor(cornerRadius: 16)
+            cellImageView.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(named: "ImagePlaceholder.jpg"),
+                    options: [.processor(processor)]) { _ in
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+        }
         
-        configCell(for: imageListCell, with: indexPath)
         imageListCell.createCornerRadiusGradient()
-        imageListCell.dateLabel.text = dateFormatter.string(from: Date())
+        imageListCell.dateLabel.text = photos[indexPath.row].createdAt?.stringFromDate() ?? ""
         imageListCell.likeButton.setImage(createBottonImage(with: indexPath), for: .normal)
         
         return imageListCell
@@ -72,41 +87,56 @@ extension ImagesListViewController: UITableViewDataSource {
 //MARK: - Extension ImagesListViewController UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     
+    //Переход через нажатие на картинку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
-        return cellHeight
-    }
+    //высота ячейки таблицы
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        guard let image = UIImage(named: photos[indexPath.row].largeImageURL) else {
+//            return 0
+//        }
+//        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+//        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+//        let imageWidth = image.size.width
+//        let scale = imageViewWidth / imageWidth
+//        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
+//        return cellHeight
+//    }
     
 }
 //MARK: - Extension sprint 12
-/*
+
 extension ImagesListViewController {
     //вызывается прямо перед тем, как ячейка таблицы будет показана на экране.
-    func tableView(
-      _ tableView: UITableView,
-      willDisplay cell: UITableViewCell,
-      forRowAt indexPath: IndexPath
-    ) {
-        if indexPath.row + 1 == imageListService.photos.count {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == photos.count {
             imageListService.fetchPhotosNextPage()
-            //Отметим, что этот метод может вызываться для одной и той же ячейки множество раз (иногда десятки раз). Поэтому нужно сделать так, чтобы многократные вызовы fetchPhotosNextPage() были «дешёвыми» по ресурсам и не приводили к прерыванию текущего сетевого запроса.
+
         }
         
         // ...
     }
+    
+    func updateTableViewAnimated(){
+        let oldCount = photos.count
+        let newCount = imageListService.photos.count
+        photos = imageListService.photos
+        if oldCount != newCount {
+            self.tableView.performBatchUpdates {
+                var indexPaths: [IndexPath] = []
+                for i in oldCount..<newCount {
+                    indexPaths.append(IndexPath(row: i, section: 0))
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
+        
+    }
+ 
 }
- */
+ 
 
 
