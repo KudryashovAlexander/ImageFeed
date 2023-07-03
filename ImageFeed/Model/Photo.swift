@@ -24,8 +24,4 @@ struct Photo {
         self.largeImageURL = largeImageURL
         self.isLiked = isLiked
     }
-    
-    mutating func changeIsLiked() {
-        self.isLiked = !isLiked
-    }
 } 

@@ -40,9 +40,8 @@ final class ImagesListViewController: UIViewController {
                   let indexPath = sender as? IndexPath
             else { return }
             
-//TODO: - Метод неправильный - Нужно как то вытащить картинку из cell
-            let image = UIImage(named: photos[indexPath.row].thumbImageURL)
-            viewController.image = image
+            let imageURL = photos[indexPath.row].largeImageURL
+            viewController.imageURL = imageURL
         } else {
             super.prepare(for: segue, sender: sender)
         }
