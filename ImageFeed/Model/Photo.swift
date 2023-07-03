@@ -13,7 +13,7 @@ struct Photo {
     let welcomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
-    let isLiked: Bool
+    var isLiked: Bool
     
     init(id: String, size: CGSize, createdAtString: String?, welcomeDescription: String?, thumbImageURL: String, largeImageURL: String, isLiked: Bool) {
         self.id = id
@@ -23,5 +23,9 @@ struct Photo {
         self.thumbImageURL = thumbImageURL
         self.largeImageURL = largeImageURL
         self.isLiked = isLiked
+    }
+    
+    mutating func changeIsLiked() {
+        self.isLiked = !isLiked
     }
 } 

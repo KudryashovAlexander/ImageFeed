@@ -31,6 +31,9 @@
 		7FC4953D2A064D09005DAB25 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4953C2A064D09005DAB25 /* UIColor+Extension.swift */; };
 		7FDF77372A4F607900A1C62C /* ImagesListServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF77362A4F607900A1C62C /* ImagesListServiceTests.swift */; };
 		7FDF773E2A4FF6C600A1C62C /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF773D2A4FF6C600A1C62C /* DateFormatter+Ext.swift */; };
+		7FDF77402A51D9AE00A1C62C /* PhotoLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF773F2A51D9AE00A1C62C /* PhotoLike.swift */; };
+		7FDF77422A53461000A1C62C /* ALertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF77412A53461000A1C62C /* ALertModel.swift */; };
+		7FDF77442A5346BE00A1C62C /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF77432A5346BE00A1C62C /* AlertPresenter.swift */; };
 		7FE934C32A222FED00DC0D68 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C22A222FED00DC0D68 /* Constants.swift */; };
 		7FE934C62A268F1E00DC0D68 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C52A268F1E00DC0D68 /* WebViewViewController.swift */; };
 		7FE934C82A269A0500DC0D68 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE934C72A269A0500DC0D68 /* AuthViewController.swift */; };
@@ -79,6 +82,9 @@
 		7FDF77342A4F607900A1C62C /* Image FeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image FeedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FDF77362A4F607900A1C62C /* ImagesListServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListServiceTests.swift; sourceTree = "<group>"; };
 		7FDF773D2A4FF6C600A1C62C /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		7FDF773F2A51D9AE00A1C62C /* PhotoLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLike.swift; sourceTree = "<group>"; };
+		7FDF77412A53461000A1C62C /* ALertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALertModel.swift; sourceTree = "<group>"; };
+		7FDF77432A5346BE00A1C62C /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		7FE934C22A222FED00DC0D68 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7FE934C52A268F1E00DC0D68 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		7FE934C72A269A0500DC0D68 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +152,8 @@
 				7F0336E72A424BCF00004BF2 /* UserResult.swift */,
 				7F17E33F2A4E054800396A4A /* Photo.swift */,
 				7F17E3412A4E0B9500396A4A /* PhotoResult.swift */,
+				7FDF773F2A51D9AE00A1C62C /* PhotoLike.swift */,
+				7FDF77412A53461000A1C62C /* ALertModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -227,6 +235,7 @@
 				7FE934CF2A2B8CE300DC0D68 /* OAuth2Service.swift */,
 				7FE934D52A2CC02800DC0D68 /* OAuth2TokenStorage.swift */,
 				7F17E33D2A4E04C800396A4A /* ImagesListService.swift */,
+				7FDF77432A5346BE00A1C62C /* AlertPresenter.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -355,6 +364,7 @@
 				7F1D9FE52A12BCFF00E3B8E4 /* ProfileViewController.swift in Sources */,
 				7FE934D82A2D2CBD00DC0D68 /* SplashViewController.swift in Sources */,
 				7FC4952C2A04440E005DAB25 /* ImagesListViewController.swift in Sources */,
+				7FDF77442A5346BE00A1C62C /* AlertPresenter.swift in Sources */,
 				7FE934D42A2BBC5B00DC0D68 /* URLSession+Extension.swift in Sources */,
 				7FC495282A04440E005DAB25 /* AppDelegate.swift in Sources */,
 				7FE934D62A2CC02800DC0D68 /* OAuth2TokenStorage.swift in Sources */,
@@ -363,6 +373,7 @@
 				7FE934CC2A2B8A5B00DC0D68 /* OAuthTokenResponseBody.swift in Sources */,
 				7FDF773E2A4FF6C600A1C62C /* DateFormatter+Ext.swift in Sources */,
 				7FE934D02A2B8CE300DC0D68 /* OAuth2Service.swift in Sources */,
+				7FDF77402A51D9AE00A1C62C /* PhotoLike.swift in Sources */,
 				7F2E93E42A36FE7F0052639F /* Profile.swift in Sources */,
 				7F0336E62A424B6300004BF2 /* ProfileImageService.swift in Sources */,
 				7F17E33E2A4E04C800396A4A /* ImagesListService.swift in Sources */,
@@ -372,6 +383,7 @@
 				7FE934D22A2BACBF00DC0D68 /* URLRequest+Extension.swift in Sources */,
 				7F2E93E02A36FBDE0052639F /* ProfileService.swift in Sources */,
 				7FC4952A2A04440E005DAB25 /* SceneDelegate.swift in Sources */,
+				7FDF77422A53461000A1C62C /* ALertModel.swift in Sources */,
 				7F17E3422A4E0B9500396A4A /* PhotoResult.swift in Sources */,
 				7FC4953D2A064D09005DAB25 /* UIColor+Extension.swift in Sources */,
 				7FE934C32A222FED00DC0D68 /* Constants.swift in Sources */,

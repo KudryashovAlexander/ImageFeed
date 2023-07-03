@@ -8,7 +8,9 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var gradientImageView: UIImageView!
-    
+
+    var delegate: ImagesListCellDelegate?
+
     static let reuseIdentifier = "ImagesListCell"
     
     //MARK: - Methods
@@ -16,6 +18,10 @@ final class ImagesListCell: UITableViewCell {
         gradientImageView.clipsToBounds = true
         gradientImageView.layer.cornerRadius = 16
         gradientImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+    }
+    
+    @IBAction private func likeButtonClicked() {
+        delegate?.imageListCellDidTapLike(self)
     }
     
     override func prepareForReuse() {

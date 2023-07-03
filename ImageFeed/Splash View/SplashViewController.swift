@@ -14,6 +14,7 @@ final class SplashViewController: UIViewController {
 
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
+    private var alertPresenter = AlertPresener()
     private let profileService = ProfileService.shared
     private let xlock = NSLock()
     
@@ -86,16 +87,9 @@ extension SplashViewController {
     
     private func showAlert() {
         UIBlockingProgressHUD.dismiss()
-        let alert = UIAlertController(
-            title: "Что-то пошло не так(",
-            message: "Не удалось войти в систему",
-            preferredStyle: .alert)
-
-        let action = UIAlertAction(title: "OK", style: .default){[weak self] _ in
-            self?.showAuthViewController()
+        alertPresenter.showAlert(viewController: self) {
+            self.showAuthViewController()
         }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
     }
     
     private func showAuthViewController() {

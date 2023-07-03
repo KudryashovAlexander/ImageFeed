@@ -8,10 +8,11 @@ final class ImagesListViewController: UIViewController {
     private let imageListService = ImagesListService()
     private var photos = [Photo]()
     private var imageListServiceObserver: NSObjectProtocol?
+    private var alertPresenter = AlertPresener()
 
-    
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -27,8 +28,9 @@ final class ImagesListViewController: UIViewController {
             }
     }
     
-    private func createBottonImage(with indexPath: IndexPath) -> UIImage {
-        let imageName = indexPath.row % 2 == 0 ?  "LikeActive" : "LikeNoActive"
+    
+    private func createBottonImage(isLiked: Bool) -> UIImage {
+        let imageName = isLiked ? "LikeActive" : "LikeNoActive"
         return UIImage(named: imageName) ?? UIImage()
     }
     
@@ -61,8 +63,10 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-                
-        if let url = URL(string: photos[indexPath.row].thumbImageURL),
+        imageListCell.delegate = self
+        
+        let photo = photos[indexPath.row]
+        if let url = URL(string: photo.thumbImageURL),
         let cellImageView = imageListCell.cellImage {
             
             cellImageView.kf.indicatorType = .activity
@@ -76,8 +80,8 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         imageListCell.createCornerRadiusGradient()
-        imageListCell.dateLabel.text = photos[indexPath.row].createdAt?.stringFromDate() ?? ""
-        imageListCell.likeButton.setImage(createBottonImage(with: indexPath), for: .normal)
+        imageListCell.dateLabel.text = photo.createdAt?.stringFromDate() ?? ""
+        imageListCell.likeButton.setImage(createBottonImage(isLiked: photo.isLiked), for: .normal)
         
         return imageListCell
     }
@@ -116,8 +120,6 @@ extension ImagesListViewController {
             imageListService.fetchPhotosNextPage()
 
         }
-        
-        // ...
     }
     
     func updateTableViewAnimated(){
@@ -135,7 +137,38 @@ extension ImagesListViewController {
         }
         
     }
- 
+}
+
+protocol ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+               let photo = photos[indexPath.row]
+        
+        UIBlockingProgressHUD.show()
+        imageListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] (result:Result<Bool, Error>) in
+            guard let self = self else { return }
+            switch result {
+            case (.success(let isLike)):
+                self.photos = self.imageListService.photos
+                cell.likeButton.setImage(self.createBottonImage(isLiked: isLike), for: .normal)
+                UIBlockingProgressHUD.dismiss()
+            case (.failure(_)):
+                print("Ошибка в изменении лайка")
+                UIBlockingProgressHUD.dismiss()
+                self.alertPresenter.showAlert(viewController: self) {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+
+        //...
+    }
+    
 }
  
 
