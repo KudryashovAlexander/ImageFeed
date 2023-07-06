@@ -124,9 +124,7 @@ extension ImagesListViewController {
     }
 }
 
-protocol ImagesListCellDelegate {
-    func imageListCellDidTapLike(_ cell: ImagesListCell)
-}
+
 
 extension ImagesListViewController: ImagesListCellDelegate {
     

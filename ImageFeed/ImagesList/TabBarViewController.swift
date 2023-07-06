@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol DismissVC {
-    func dismissVC()
-}
-
-final class TabBarViewController: UITabBarController, DismissVC {
+final class TabBarViewController: UITabBarController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +18,6 @@ final class TabBarViewController: UITabBarController, DismissVC {
         )
         
         let profileViewController = ProfileViewController()
-        profileViewController.delegateDismiss = self
         profileViewController.tabBarItem = UITabBarItem(
             title: nil,
             image: UIImage(named: "tab_profile_active"),
@@ -32,10 +27,7 @@ final class TabBarViewController: UITabBarController, DismissVC {
         self.viewControllers = [imagesListViewController, profileViewController]
     }
     
-    func dismissVC() {
-        dismiss(animated: true)
-    }
-    
+
 
 }
 

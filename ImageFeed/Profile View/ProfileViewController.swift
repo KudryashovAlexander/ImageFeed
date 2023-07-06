@@ -12,8 +12,6 @@ class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
-    var delegateDismiss: DismissVC?
-
         
     override func viewDidLoad() {
         super.viewDidLoad()

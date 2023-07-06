@@ -1,6 +1,10 @@
 import UIKit
 import Kingfisher
 
+protocol ImagesListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListCell: UITableViewCell {
     
     //MARK: - Outlets
@@ -9,7 +13,7 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var gradientImageView: UIImageView!
 
-    var delegate: ImagesListCellDelegate?
+    weak var delegate: ImagesListCellDelegate?
 
     static let reuseIdentifier = "ImagesListCell"
     
