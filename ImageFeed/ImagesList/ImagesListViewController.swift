@@ -28,12 +28,6 @@ final class ImagesListViewController: UIViewController {
             }
     }
     
-    
-    private func createBottonImage(isLiked: Bool) -> UIImage {
-        let imageName = isLiked ? "LikeActive" : "LikeNoActive"
-        return UIImage(named: imageName) ?? UIImage()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             guard let viewController = segue.destination as? SingleImageViewController,
@@ -78,23 +72,20 @@ extension ImagesListViewController: UITableViewDataSource {
         
         imageListCell.createCornerRadiusGradient()
         imageListCell.dateLabel.text = photo.createdAt?.stringFromDate() ?? ""
-        imageListCell.likeButton.setImage(createBottonImage(isLiked: photo.isLiked), for: .normal)
+        imageListCell.likeButton.setImage(imageListCell.setIsLiked(isLiked: photo.isLiked), for: .normal)
         
         return imageListCell
     }
-    
 }
 
 //MARK: - Extension ImagesListViewController UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     
-    //Переход через нажатие на картинку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
-    //высота ячейки таблицы
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let photoSize = photos[indexPath.row].size
@@ -105,16 +96,15 @@ extension ImagesListViewController: UITableViewDelegate {
         let cellHeight = photoSize.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }
-    
 }
+
 //MARK: - Extension sprint 12
 
 extension ImagesListViewController {
-    //вызывается прямо перед тем, как ячейка таблицы будет показана на экране.
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == photos.count {
             imageListService.fetchPhotosNextPage()
-
         }
     }
     
@@ -131,7 +121,6 @@ extension ImagesListViewController {
                 tableView.insertRows(at: indexPaths, with: .automatic)
             } completion: { _ in }
         }
-        
     }
 }
 
@@ -148,10 +137,11 @@ extension ImagesListViewController: ImagesListCellDelegate {
         UIBlockingProgressHUD.show()
         imageListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] (result:Result<Bool, Error>) in
             guard let self = self else { return }
+            
             switch result {
             case (.success(let isLike)):
                 self.photos = self.imageListService.photos
-                cell.likeButton.setImage(self.createBottonImage(isLiked: isLike), for: .normal)
+                cell.likeButton.setImage(cell.setIsLiked(isLiked: isLike), for: .normal)
                 UIBlockingProgressHUD.dismiss()
             case (.failure(_)):
                 print("Ошибка в изменении лайка")
@@ -161,10 +151,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
                 }
             }
         }
-
-        //...
     }
-    
 }
  
 

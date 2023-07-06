@@ -58,7 +58,7 @@ final class ImagesListService {
         }
         self.taskPhotoNext = task
         self.taskPhotoNext?.resume()
-        self.taskPhotoNext = nil //Насколько это правильная запись?
+        self.taskPhotoNext = nil
     }
 
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -98,6 +98,6 @@ final class ImagesListService {
             }
         self.taskChangeLike = task
         self.taskChangeLike?.resume()
-        self.taskChangeLike = nil //Насколько это правильная запись?
+        self.taskChangeLike = nil
     }
 }

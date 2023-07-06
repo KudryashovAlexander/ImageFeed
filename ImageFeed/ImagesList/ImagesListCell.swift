@@ -20,14 +20,17 @@ final class ImagesListCell: UITableViewCell {
         gradientImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
     }
     
+    func setIsLiked(isLiked: Bool) -> UIImage {
+        let imageName = isLiked ? "LikeActive" : "LikeNoActive"
+        return UIImage(named: imageName) ?? UIImage()
+    }
+    
     @IBAction private func likeButtonClicked() {
         delegate?.imageListCellDidTapLike(self)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-//         Отменяем загрузку, чтобы избежать багов при переиспользовании ячеек
         cellImage.kf.cancelDownloadTask()
     }
     
