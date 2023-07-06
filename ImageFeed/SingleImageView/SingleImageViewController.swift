@@ -20,7 +20,8 @@ final class SingleImageViewController: UIViewController {
     
     func showImage() {
         UIBlockingProgressHUD.show()
-        imageView.kf.setImage(with: imageURL, placeholder: UIImage(named: "ImagePlaceholder.jpg")) { [weak self] result in
+        guard let url = URL(string: imageURL) else { return }
+        imageView.kf.setImage(with: url) { [weak self] result in
             UIBlockingProgressHUD.dismiss()
             
             guard let self = self else { return }
@@ -28,7 +29,7 @@ final class SingleImageViewController: UIViewController {
             case .success(let imageResult):
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)
             case .failure:
-                showAlert()
+                self.showAlert()
             }
         }
     }
