@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import WebKit
 
 class ProfileViewController: UIViewController {
     
@@ -11,7 +12,6 @@ class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
-
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,8 +135,42 @@ class ProfileViewController: UIViewController {
     
     @objc
     private func didTapLogoutButton() {
-        print("Logout Press")
-        OAuth2TokenStorage().deleteToken()
+        showAlert()
+    }
+    
+    private func switchToSplashController() {
+        UIBlockingProgressHUD.dismiss()
+
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        let splashVC = SplashViewController()
+        window.rootViewController = splashVC
+    }
+    
+    static func clean() {
+       // Очищаем все куки из хранилища.
+       HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+       // Запрашиваем все данные из локального хранилища.
+       WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+          // Массив полученных записей удаляем из хранилища.
+          records.forEach { record in
+             WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+          }
+       }
+    }
+    
+    private func showAlert(){
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены что хотите выйти?", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "Да", style: .default) { _ in
+            OAuth2TokenStorage().deleteToken()
+            ProfileViewController.clean()
+            self.switchToSplashController()
+        }
+        
+        let action2 = UIAlertAction(title: "Нет", style: .cancel) {(_) in}
+        
+        alert.addAction(action1)
+        alert.addAction(action2)
+        self.present(alert, animated: true)
     }
     
 }

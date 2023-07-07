@@ -1,25 +1,37 @@
 import UIKit
+import Kingfisher
+
 final class SingleImageViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    private var alertPresenter = AlertPresener()
     
-    var image: UIImage!{
-        didSet{
-            guard isViewLoaded else { return }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
+    var imageURL: String!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         scrollView.delegate = self
-        
+    
         super.viewDidLoad()
-        imageView.image = image
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 2.0
-        rescaleAndCenterImageInScrollView(image: image)
+        showImage()
+    }
+    
+    func showImage() {
+        UIBlockingProgressHUD.show()
+        guard let url = URL(string: imageURL) else { return }
+        imageView.kf.setImage(with: url) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+            case .failure:
+                self.showAlert()
+            }
+        }
     }
     
     @IBAction private func didTapBackButton(_ sender: Any) {
@@ -50,6 +62,18 @@ final class SingleImageViewController: UIViewController {
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
+    
+    private func showAlert(){
+        let alert = UIAlertController(title: "Что-то пошло не так", message: "Попробовать ещё раз?", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "Не надо", style: .cancel)
+        let action2 = UIAlertAction(title: "Повторить", style: .default) {_ in
+            self.showImage()
+        }
+        alert.addAction(action1)
+        alert.addAction(action2)
+        self.present(alert, animated: true)
+    }
+    
 
 }
 
