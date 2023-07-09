@@ -22,7 +22,7 @@ final class ImagesListService {
         }
         let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
         var request = URLRequest.makeHTTPRequest(
-            path: "/photos?page=\(nextPage)",
+            path: "/photos?page=\(nextPage)&per_page=10",
             httpMethod: "GET"
         )
         print (nextPage)
