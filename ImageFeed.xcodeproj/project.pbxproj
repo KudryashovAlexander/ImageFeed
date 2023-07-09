@@ -179,6 +179,10 @@
 		7FC495262A04440E005DAB25 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				7FC495272A04440E005DAB25 /* AppDelegate.swift */,
+				7FC495292A04440E005DAB25 /* SceneDelegate.swift */,
+				7FC495352A044410005DAB25 /* Info.plist */,
+				7FC4952D2A04440E005DAB25 /* Main.storyboard */,
 				7F55CC5F2A1A728600DD25BE /* Model */,
 				7FE934D92A2D2CCC00DC0D68 /* Splash View */,
 				7FE934C42A268F0800DC0D68 /* Auth */,
@@ -187,10 +191,6 @@
 				7F1D9FE62A14209F00E3B8E4 /* Profile View */,
 				7FE934CD2A2B8CC700DC0D68 /* Service */,
 				7FC4953B2A064CE3005DAB25 /* Helpers */,
-				7FC495272A04440E005DAB25 /* AppDelegate.swift */,
-				7FC495292A04440E005DAB25 /* SceneDelegate.swift */,
-				7FC4952D2A04440E005DAB25 /* Main.storyboard */,
-				7FC495352A044410005DAB25 /* Info.plist */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
