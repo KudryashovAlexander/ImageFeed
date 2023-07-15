@@ -76,7 +76,7 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
             self.clean()
             self.switchToSplashController()
         } actionTwo: {
-            
+            //Ничего не делать
         }
     }
     

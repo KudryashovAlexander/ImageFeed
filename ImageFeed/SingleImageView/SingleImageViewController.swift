@@ -64,16 +64,18 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func showAlert(){
-        let alert = UIAlertController(title: "Что-то пошло не так", message: "Попробовать ещё раз?", preferredStyle: .alert)
-        let action1 = UIAlertAction(title: "Не надо", style: .cancel)
-        let action2 = UIAlertAction(title: "Повторить", style: .default) {_ in
+        let alertModel = AlertModel(
+            title: "Что-то пошло не так",
+            message: "Попробовать ещё раз?",
+            buttonTitle: "Повторить",
+            buttonTitle2: "Не надо")
+        
+        alertPresenter.showAlertTwoButton(model: alertModel, viewController: self) {
             self.showImage()
+        } actionTwo: {
+            //Ничего не делать
         }
-        alert.addAction(action1)
-        alert.addAction(action2)
-        self.present(alert, animated: true)
     }
-    
 
 }
 
