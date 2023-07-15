@@ -1,62 +1,39 @@
 import UIKit
-import Kingfisher
 import WebKit
 
-class ProfileViewController: UIViewController {
+//MARK: - Protocol
+public protocol ProfileViewViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    var avatarImageView: UIImageView { get set }
+    var nameLabel: UILabel { get set }
+    var loginNameLabel: UILabel { get set }
+    var descriptionLabel: UILabel { get set }
     
-    private var avatarImageView = UIImageView()
-    private var nameLabel = UILabel()
-    private var loginNameLabel = UILabel()
-    private var descriptionLabel = UILabel()
+    func viewDidLoad()
+}
+
+//MARK: - Class ProfileViewController
+class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol {
+    
+    var avatarImageView = UIImageView()
+    var nameLabel = UILabel()
+    var loginNameLabel = UILabel()
+    var descriptionLabel = UILabel()
     private var logoutButton = UIButton()
-    private let profileService = ProfileService.shared
     
-    private var profileImageServiceObserver: NSObjectProtocol?
+    var presenter: ProfileViewPresenterProtocol?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-                self.updateProfileDetails(profile: self.profileService.profile)
-            }
-        updateAvatar()
-        updateProfileDetails(profile: profileService.profile)
+        
+        presenter?.viewDidLoad()
         
         createAvatarImageView(image: UIImage(named: "placeholder.jpg") ?? UIImage())
         createNameLabel(name: "нет данных")
         createLoginNameLabel(login: "нет данных")
         createDescriptionLabel(descrption: "нет данных")
         createLogoutButton()
-    }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        avatarImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 16)
-        avatarImageView.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "placeholder.jpg"),
-                options: [.processor(processor)])
-    }
-    
-    private func updateProfileDetails(profile: Profile?) {
-        if let profile = profile {
-            DispatchQueue.main.async {
-                self.nameLabel.text = profile.name
-                self.loginNameLabel.text = profile.loginName
-                self.descriptionLabel.text = profile.bio
-            }
-        }
     }
     
     private func createAvatarImageView(image: UIImage) {
@@ -85,7 +62,7 @@ class ProfileViewController: UIViewController {
             nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor)
         ])
-        
+
     }
     
     private func createLoginNameLabel(login: String) {
@@ -135,42 +112,7 @@ class ProfileViewController: UIViewController {
     
     @objc
     private func didTapLogoutButton() {
-        showAlert()
+        presenter?.showAlert(viewController: self)
     }
-    
-    private func switchToSplashController() {
-        UIBlockingProgressHUD.dismiss()
-
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        let splashVC = SplashViewController()
-        window.rootViewController = splashVC
-    }
-    
-    static func clean() {
-       // Очищаем все куки из хранилища.
-       HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-       // Запрашиваем все данные из локального хранилища.
-       WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-          // Массив полученных записей удаляем из хранилища.
-          records.forEach { record in
-             WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-          }
-       }
-    }
-    
-    private func showAlert(){
-        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены что хотите выйти?", preferredStyle: .alert)
-        let action1 = UIAlertAction(title: "Да", style: .default) { _ in
-            OAuth2TokenStorage().deleteToken()
-            ProfileViewController.clean()
-            self.switchToSplashController()
-        }
-        
-        let action2 = UIAlertAction(title: "Нет", style: .cancel) {(_) in}
-        
-        alert.addAction(action1)
-        alert.addAction(action2)
-        self.present(alert, animated: true)
-    }
-    
+  
 }

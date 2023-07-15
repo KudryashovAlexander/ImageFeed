@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-// MARK: - Protocols
+// MARK: - Protocol
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
@@ -42,14 +42,6 @@ final class WebViewViewController: UIViewController, WebViewViewControllerProtoc
         
         webView.navigationDelegate = self
         presenter?.viewDidLoad()
-//
-//        estimatedProgressObservation = webView.observe(
-//            \.estimatedProgress,
-//            options: [],
-//            changeHandler: { [weak self] _, _ in
-//                guard let self = self else { return }
-//            })
-
     }
     
     @IBAction private func didTapBackButton(_ sender: Any?) {

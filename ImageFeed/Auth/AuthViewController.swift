@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - Protocols
+//MARK: - Protocol
 protocol AuthViewControllerDelegate: AnyObject {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
 }
