@@ -1,14 +1,24 @@
 import UIKit
 import Kingfisher
 
-final class ImagesListViewController: UIViewController {
+//MARK: - Protocol
+protocol ImagesListViewControllerProtocol {
+    var presenter: ImagesListViewPresenter? { get set }
+    var tableView: UITableView! { get set }
+}
+
+
+//MARK: - Class ImagesListViewController
+final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     private let imageListService = ImagesListService()
-    private var photos = [Photo]()
+    private var photos = [Photo]() // перенести
     private var imageListServiceObserver: NSObjectProtocol?
-    private var alertPresenter = AlertPresener()
+    private var alertPresenter = AlertPresener() //перенести
+    var presenter: ImagesListViewPresenter?
+    
 
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     

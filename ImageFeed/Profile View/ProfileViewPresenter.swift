@@ -7,7 +7,6 @@
 
 import Foundation
 import WebKit
-import Kingfisher
 
 //MARK: - Protocol
 public protocol ProfileViewPresenterProtocol {
@@ -35,10 +34,10 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
             ) { [weak self] _ in
                 guard let self = self else { return }
                 self.updateAvatar()
-                self.updateProfileDetails(profile: self.profileService.profile)
+                self.view?.updateProfileDetails(profile: self.profileService.profile)
             }
         updateAvatar()
-        updateProfileDetails(profile: profileService.profile)
+        view?.updateProfileDetails(profile: profileService.profile)
         
     }
     
@@ -47,22 +46,7 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        view?.avatarImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 16)
-        view?.avatarImageView.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "placeholder.jpg"),
-                options: [.processor(processor)])
-    }
-    
-    private func updateProfileDetails(profile: Profile?) {
-        if let profile = profile {
-            DispatchQueue.main.async {
-                self.view?.nameLabel.text = profile.name
-                self.view?.loginNameLabel.text = profile.loginName
-                self.view?.descriptionLabel.text = profile.bio
-            }
-        }
+        view?.updateAvatar(url: url)
     }
     
     func showAlert(viewController: UIViewController) {
@@ -86,8 +70,7 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let splashVC = SplashViewController()
         window.rootViewController = splashVC
-    }
-   
+    }   
     
     private func clean() {
        // Очищаем все куки из хранилища.
@@ -100,6 +83,5 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
           }
        }
     }
-    
     
 }

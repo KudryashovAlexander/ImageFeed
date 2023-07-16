@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 import WebKit
 
 //MARK: - Protocol
@@ -10,6 +11,8 @@ public protocol ProfileViewViewControllerProtocol {
     var descriptionLabel: UILabel { get set }
     
     func viewDidLoad()
+    func updateAvatar(url: URL)
+    func updateProfileDetails(profile: Profile?)
 }
 
 //MARK: - Class ProfileViewController
@@ -108,6 +111,25 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
             logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
         ])
         
+    }
+    
+    func updateAvatar(url: URL) {
+        avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 16)
+        avatarImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "placeholder.jpg"),
+                options: [.processor(processor)])
+    }
+    
+    func updateProfileDetails(profile: Profile?) {
+        if let profile = profile {
+            DispatchQueue.main.async {
+                self.nameLabel.text = profile.name
+                self.loginNameLabel.text = profile.loginName
+                self.descriptionLabel.text = profile.bio
+            }
+        }
     }
     
     @objc
