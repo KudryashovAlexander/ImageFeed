@@ -5,10 +5,6 @@ import WebKit
 //MARK: - Protocol
 public protocol ProfileViewViewControllerProtocol {
     var presenter: ProfileViewPresenterProtocol? { get set }
-    var avatarImageView: UIImageView { get set }
-    var nameLabel: UILabel { get set }
-    var loginNameLabel: UILabel { get set }
-    var descriptionLabel: UILabel { get set }
     
     func viewDidLoad()
     func updateAvatar(url: URL)
