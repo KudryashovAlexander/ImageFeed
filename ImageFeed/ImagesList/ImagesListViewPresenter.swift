@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - Protocol
-protocol ImagesListViewPresenterProtocol {
+public protocol ImagesListViewPresenterProtocol: AnyObject {
     var view: ImagesListViewControllerProtocol? { get set }
     func showAlert(vc: UIViewController)
     func arrayCount() -> Int
@@ -25,7 +25,7 @@ protocol ImagesListViewPresenterProtocol {
 //MARK: - Class ImagesListViewPresenter
 class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     
-    var view: ImagesListViewControllerProtocol?
+    weak var view: ImagesListViewControllerProtocol?
     private var alertPresenter = AlertPresener()
     private let imageListService = ImagesListService()
     private var imageListServiceObserver: NSObjectProtocol?
@@ -83,7 +83,7 @@ class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
             case (.failure(_)):
                 print("Ошибка в изменении лайка")
                 self.alertPresenter.showAlert(viewController: vc) {
-                    self.view?.tableView.reloadData()
+                    self.view?.reloadTableView()
                 }
             }
         }

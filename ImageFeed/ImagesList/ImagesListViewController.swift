@@ -2,9 +2,8 @@ import UIKit
 import Kingfisher
 
 //MARK: - Protocol
-protocol ImagesListViewControllerProtocol {
-    var presenter: ImagesListViewPresenter? { get set }
-    var tableView: UITableView! { get set }
+public protocol ImagesListViewControllerProtocol: AnyObject {
+    var presenter: ImagesListViewPresenterProtocol? { get set }
     func reloadTableView()
     func updateTableViewAnimated(oldCount:Int, newCount:Int)
 }
@@ -15,7 +14,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     
     @IBOutlet weak var tableView: UITableView!
     
-    var presenter: ImagesListViewPresenter?
+    var presenter: ImagesListViewPresenterProtocol?
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
         

@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 
 //MARK: - Protocol
-public protocol ProfileViewPresenterProtocol {
+public protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewViewControllerProtocol? { get set }
     func showAlert(viewController: UIViewController)
     func viewDidLoad()
@@ -19,7 +19,7 @@ public protocol ProfileViewPresenterProtocol {
 //MARK: - Class ProfileViewPresenter
 class ProfileViewPresenter:ProfileViewPresenterProtocol {
 
-    var view: ProfileViewViewControllerProtocol?
+    weak var view: ProfileViewViewControllerProtocol?
     
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?

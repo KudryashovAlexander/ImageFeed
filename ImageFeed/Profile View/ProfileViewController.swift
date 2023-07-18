@@ -3,7 +3,7 @@ import Kingfisher
 import WebKit
 
 //MARK: - Protocol
-public protocol ProfileViewViewControllerProtocol {
+public protocol ProfileViewViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     
     func viewDidLoad()
