@@ -46,11 +46,10 @@ final class ImagesListViewTests: XCTestCase {
             presenter.view = viewController
         
         //when
-        presenter.view?.updateTableViewAnimated(oldCount: 1, newCount: 3)
+        presenter.fetchPhotosNextPage()
         
         //then
         XCTAssertTrue(viewController.isChangeCount)
-        
     }
 
 

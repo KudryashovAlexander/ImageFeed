@@ -12,10 +12,12 @@ final class ImagesListViewPresenterSpy: ImageFeed.ImagesListViewPresenterProtoco
     
     var view: ImageFeed.ImagesListViewControllerProtocol?
     var viewDidLoadCalled: Bool = false
+    
+    var isAlertShow: Bool = false
 
     
     func showAlert(vc: UIViewController) {
-        
+        isAlertShow = true
     }
     
     func arrayCount() -> Int {
@@ -27,7 +29,11 @@ final class ImagesListViewPresenterSpy: ImageFeed.ImagesListViewPresenterProtoco
     }
     
     func fetchPhotosNextPage() {
-        
+        let oldCount = 10
+        let newCount = 20
+        if oldCount < newCount {
+            view?.updateTableViewAnimated(oldCount: 10, newCount: 20)
+        }
     }
     
     func changeLike(photoIndex: Int, vc: UIViewController) -> Bool {
