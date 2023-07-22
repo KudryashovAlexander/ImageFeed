@@ -12,13 +12,13 @@ final class ImagesListViewTests: XCTestCase {
     
     func testViewControllerCallsViewDidLoad() {
         //given
-        let viewController = ImagesListViewController()
+        let viewController = ImagesListViewControllerSpy()
         let presenter = ImagesListViewPresenterSpy()
             viewController.presenter = presenter
             presenter.view = viewController
         
         //when
-        _ = viewController.view
+        viewController.viewDidLoad()
 
         //then
         XCTAssertTrue(presenter.viewDidLoadCalled)

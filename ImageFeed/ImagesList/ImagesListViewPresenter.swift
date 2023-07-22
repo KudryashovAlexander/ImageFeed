@@ -76,15 +76,16 @@ class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
             guard let self = self else { return }
             
             switch result {
-            case (.success(let isLiked)):
+            case (.success(_)):
                 self.photos = self.imageListService.photos
-                isChange = isLiked
+                isChange = !photo.isLiked
 
             case (.failure(_)):
                 print("Ошибка в изменении лайка")
                 self.alertPresenter.showAlert(viewController: vc) {
                     self.view?.reloadTableView()
                 }
+                break
             }
         }
         return isChange

@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         let splashVC = SplashViewController()
-//        splashVC.view.accessibilityIdentifier = "SplashViewController"
         window?.rootViewController = splashVC
     }
 

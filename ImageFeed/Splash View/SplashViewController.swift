@@ -12,8 +12,8 @@ final class SplashViewController: UIViewController {
     
     private var logoImageView = UIImageView()
 
-    private let oauth2TokenStorage = OAuth2TokenStorage()
-    private let oauth2Service = OAuth2Service()
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
+    private let oauth2Service = OAuth2Service.shared
     private var alertPresenter = AlertPresener()
     private let profileService = ProfileService.shared
     private let xlock = NSLock()

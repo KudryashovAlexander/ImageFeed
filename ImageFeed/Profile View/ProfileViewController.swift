@@ -93,6 +93,7 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
     }
     
     private func createLogoutButton() {
+        logoutButton.accessibilityIdentifier = "logout button"
         let image = UIImage(named: "Logout_Button") ?? UIImage()
         logoutButton.setImage(image, for: .normal)
         logoutButton.addTarget(self, action: #selector (self.didTapLogoutButton), for: .touchUpInside)

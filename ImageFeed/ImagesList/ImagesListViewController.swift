@@ -4,6 +4,7 @@ import Kingfisher
 //MARK: - Protocol
 public protocol ImagesListViewControllerProtocol: AnyObject {
     var presenter: ImagesListViewPresenterProtocol? { get set }
+    func viewDidLoad()
     func reloadTableView()
     func updateTableViewAnimated(oldCount:Int, newCount:Int)
 }
@@ -55,7 +56,7 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         imageListCell.delegate = self
         
-        if let imageURL = presenter?.imageLargeURL(index: indexPath.row),
+        if let imageURL = presenter?.imageThumbURL(index: indexPath.row),
            let url = URL(string: imageURL),
            let cellImageView = imageListCell.cellImage
         {
@@ -127,7 +128,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
         UIBlockingProgressHUD.show()
         
         if let isLiked = presenter?.changeLike(photoIndex: indexPath.row, vc: self) {
-            cell.likeButton.setImage(cell.setIsLiked(isLiked: isLiked), for: .normal)
+            cell.likeButton.setImage(cell.setIsLiked(isLiked: !isLiked), for: .normal)
             UIBlockingProgressHUD.dismiss()
         }
     }

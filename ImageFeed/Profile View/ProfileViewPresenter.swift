@@ -24,6 +24,7 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     private var alertPresener = AlertPresener()
+    private var oAuth2TokenStorage = OAuth2TokenStorage.shared
     
     func viewDidLoad() {
         profileImageServiceObserver = NotificationCenter.default
@@ -56,7 +57,7 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
                                     buttonTitle2: "Нет")
         
         alertPresener.showAlertTwoButton(model: alertModel, viewController: viewController) {
-            OAuth2TokenStorage().deleteToken()
+            self.oAuth2TokenStorage.deleteToken()
             self.clean()
             self.switchToSplashController()
         } actionTwo: {
