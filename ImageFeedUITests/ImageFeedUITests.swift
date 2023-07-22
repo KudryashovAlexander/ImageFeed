@@ -10,16 +10,17 @@ import XCTest
 
 final class ImageFeedUITests: XCTestCase {
     
-    private let mail = "_"
-    private let password = ""
-    private let nameSurname = ""
-    private let userName = ""
+    //Это тестовый аккаунт, поэтому данные не удалены
+    private let mail = "hogapak122@muzitp.com"
+    private let password = "Qwerty1234"
+    private let nameSurname = "Jonh Weak"
+    private let userName = "@jonhweak"
     
     private let app = XCUIApplication() // переменная приложения
 
     override func setUpWithError() throws {
 
-        continueAfterFailure = false // настройка выполнения тестов, которая прекратит выполнения тестов, если в тесте что-то пошло не так
+        continueAfterFailure = true // настройка выполнения тестов, которая прекратит выполнения тестов, если в тесте что-то пошло не так
 
         app.launch() //Запускаем приложение перед каждым тестом
 
@@ -41,7 +42,7 @@ final class ImageFeedUITests: XCTestCase {
         
         loginTexField.tap()
         loginTexField.typeText(mail)
-        dismissKeyboard()
+        webView.swipeUp()
         sleep(2)
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
@@ -50,7 +51,7 @@ final class ImageFeedUITests: XCTestCase {
         
         passwordTextField.tap()
         passwordTextField.typeText(password)
-        dismissKeyboard()
+        webView.swipeUp()
         sleep(2)
                 
         // Нажать кнопку логина
@@ -126,14 +127,5 @@ final class ImageFeedUITests: XCTestCase {
         // Проверить, что открылся экран авторизации
         app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
     }
-    
-    func dismissKeyboard() {
-        if app.keyboards.element(boundBy: 0).exists {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                app.keyboards.buttons["Hide keyboard"].tap()
-            } else {
-                app.toolbars.buttons["Done"].tap()
-            }
-        }
-    }
+
 }

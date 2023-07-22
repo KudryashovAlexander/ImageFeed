@@ -18,11 +18,12 @@ class OAuth2TokenStorage {
             return KeychainWrapper.standard.string(forKey: tokenKey)
         }
         set {
-            guard let token = newValue else {
+            guard let newToken = newValue else {
                 print("ОШИБКА! Не удалось записать токен")
                 return
             }
-            let isSuccess = KeychainWrapper.standard.set(token, forKey: tokenKey)
+            KeychainWrapper.standard.removeObject(forKey: tokenKey)
+            let isSuccess = KeychainWrapper.standard.set(newToken, forKey: tokenKey)
             guard isSuccess else {
                 print("ОШИБКА! Не удалось записать токен")
                 return
