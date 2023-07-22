@@ -41,7 +41,7 @@ final class ImageFeedUITests: XCTestCase {
         
         loginTexField.tap()
         loginTexField.typeText(mail)
-        dismissKeyboardIfPresent()
+        dismissKeyboard()
         sleep(2)
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
@@ -50,7 +50,7 @@ final class ImageFeedUITests: XCTestCase {
         
         passwordTextField.tap()
         passwordTextField.typeText(password)
-        dismissKeyboardIfPresent()
+        dismissKeyboard()
         sleep(2)
                 
         // Нажать кнопку логина
@@ -127,7 +127,7 @@ final class ImageFeedUITests: XCTestCase {
         app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
     }
     
-    func dismissKeyboardIfPresent() {
+    func dismissKeyboard() {
         if app.keyboards.element(boundBy: 0).exists {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 app.keyboards.buttons["Hide keyboard"].tap()
