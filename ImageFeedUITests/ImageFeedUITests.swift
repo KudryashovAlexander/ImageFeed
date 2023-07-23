@@ -42,7 +42,9 @@ final class ImageFeedUITests: XCTestCase {
         
         loginTexField.tap()
         loginTexField.typeText(mail)
-        webView.swipeUp()
+        
+        dismissKeyboard()
+       // webView.swipeUp()
         sleep(2)
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
@@ -51,7 +53,8 @@ final class ImageFeedUITests: XCTestCase {
         
         passwordTextField.tap()
         passwordTextField.typeText(password)
-        webView.swipeUp()
+        dismissKeyboard()
+        //webView.swipeUp()
         sleep(2)
                 
         // Нажать кнопку логина
@@ -80,11 +83,11 @@ final class ImageFeedUITests: XCTestCase {
         // Поставить лайк в ячейке верхней картинки
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
 
-        cellToLike.buttons["LikeButtom"].tap() //Уточнить название кнопки
+        cellToLike.buttons["LikeButtom"].tap()
         sleep(2)
 
         // Отменить лайк в ячейке верхней картинки
-        cellToLike.buttons["LikeButtom"].tap() //Уточнить название кнопки
+        cellToLike.buttons["LikeButtom"].tap()
         sleep(2)
 
         // Нажать на верхнюю ячейку
@@ -103,7 +106,7 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         
         // Вернуться на экран ленты
-        let navBackButtonWhiteButton = app.buttons["BackButtom"] //уточнить название кнопки
+        let navBackButtonWhiteButton = app.buttons["singleViewBackButtom"] //уточнить название кнопки
         navBackButtonWhiteButton.tap()
 
     }
@@ -126,6 +129,16 @@ final class ImageFeedUITests: XCTestCase {
         
         // Проверить, что открылся экран авторизации
         app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
+    }
+    
+    func dismissKeyboard() {
+        if app.keyboards.element(boundBy: 0).exists {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                app.keyboards.buttons["Continiue"].tap()
+            } else {
+                app.toolbars.buttons["Done"].tap()
+            }
+        }
     }
 
 }

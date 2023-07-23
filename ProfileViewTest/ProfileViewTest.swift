@@ -51,7 +51,7 @@ final class ProfileViewTest: XCTestCase {
         viewController.presenter = presenter
         presenter.view = viewController
         
-        let url = URL(string: "")!
+        let url = DefaultBaseURL
                 
         //When
         presenter.view?.updateAvatar(url: url)

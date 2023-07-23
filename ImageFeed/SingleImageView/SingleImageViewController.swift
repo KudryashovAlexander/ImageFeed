@@ -6,11 +6,13 @@ final class SingleImageViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     private var alertPresenter = AlertPresener()
     
+    @IBOutlet weak var backButton: UIButton!
     var imageURL: String!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         scrollView.delegate = self
+        backButton.accessibilityIdentifier = "singleViewBackButtom"
     
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1

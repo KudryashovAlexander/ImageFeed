@@ -59,7 +59,9 @@ final class ImagesListService {
         }
         self.taskPhotoNext = task
         self.taskPhotoNext?.resume()
-        self.taskPhotoNext = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.taskPhotoNext = nil
+        }
     }
 
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {

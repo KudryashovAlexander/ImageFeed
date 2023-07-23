@@ -165,8 +165,9 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dT-Nx-4mh" userLabel="LikeButton">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dT-Nx-4mh">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="LikeButtom"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="KVe-tk-3Od"/>
                                                         <constraint firstAttribute="width" constant="44" id="smC-Fj-UtO"/>
@@ -263,18 +264,6 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="vRM-S8-Oa8"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="vW4-pv-ZOe"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KId-wq-4bS">
-                                <rect key="frame" x="8" y="67" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="WqO-kq-Jhx"/>
-                                    <constraint firstAttribute="width" constant="48" id="zDq-gi-M7p"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="BackwardButton"/>
-                                <connections>
-                                    <action selector="didTapBackButton:" destination="FkV-sB-xBh" eventType="touchUpInside" id="ben-UQ-1Bv"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6J-3j-cqf">
                                 <rect key="frame" x="171.66666666666666" y="751" width="50" height="50"/>
                                 <constraints>
@@ -285,6 +274,21 @@
                                 <state key="normal" image="Sharing_Button"/>
                                 <connections>
                                     <action selector="didTapShareButton:" destination="FkV-sB-xBh" eventType="touchUpInside" id="ZnI-rA-exO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KId-wq-4bS">
+                                <rect key="frame" x="8" y="67" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="WqO-kq-Jhx"/>
+                                    <constraint firstAttribute="width" constant="48" id="zDq-gi-M7p"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="BackwardButton"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="FkV-sB-xBh" eventType="touchUpInside" id="ben-UQ-1Bv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -303,6 +307,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="tmy-qU-8Ab"/>
                     <connections>
+                        <outlet property="backButton" destination="KId-wq-4bS" id="Tuj-cS-bsQ"/>
                         <outlet property="imageView" destination="7e6-Uy-hHe" id="LXP-36-wXc"/>
                         <outlet property="scrollView" destination="AO6-6A-nnt" id="alb-bF-Qo6"/>
                     </connections>

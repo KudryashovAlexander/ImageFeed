@@ -35,9 +35,11 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
         createLogoutButton()
     }
     
+    
+    
     private func createAvatarImageView(image: UIImage) {
         avatarImageView.image = image
-        avatarImageView.layer.cornerRadius = 16
+        //avatarImageView.layer.cornerRadius = 16
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatarImageView)
         
@@ -117,6 +119,7 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
                 with: url,
                 placeholder: UIImage(named: "placeholder.jpg"),
                 options: [.processor(processor)])
+        
     }
     
     func updateProfileDetails(profile: Profile?) {

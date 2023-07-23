@@ -37,8 +37,9 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
                 self.updateAvatar()
                 self.view?.updateProfileDetails(profile: self.profileService.profile)
             }
-        updateAvatar()
-        view?.updateProfileDetails(profile: profileService.profile)
+        
+            updateAvatar()
+            view?.updateProfileDetails(profile: profileService.profile)
         
     }
     
@@ -46,7 +47,10 @@ class ProfileViewPresenter:ProfileViewPresenterProtocol {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
-        else { return }
+        else {
+            return
+        }
+        print(profileImageURL)
         view?.updateAvatar(url: url)
     }
     

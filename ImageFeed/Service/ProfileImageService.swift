@@ -17,7 +17,6 @@ final class ProfileImageService {
     private var currentTask: URLSessionTask?
     private var oAuth2TokenStorage = OAuth2TokenStorage.shared
     
-    
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     private enum NetWorkError: Error {
