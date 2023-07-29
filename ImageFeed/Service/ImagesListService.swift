@@ -15,6 +15,7 @@ final class ImagesListService {
     private var taskPhotoNext: URLSessionTask? = nil
     private var taskChangeLike: URLSessionTask? = nil
     private var lastLoadedPage: Int?
+    private let oAuth2TokenStorage = OAuth2TokenStorage.shared
         
     func fetchPhotosNextPage() {
         if taskPhotoNext != nil {
@@ -26,7 +27,7 @@ final class ImagesListService {
             httpMethod: "GET"
         )
         print (nextPage)
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token = oAuth2TokenStorage.token else { return }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult],Error>) in
@@ -58,7 +59,9 @@ final class ImagesListService {
         }
         self.taskPhotoNext = task
         self.taskPhotoNext?.resume()
-        self.taskPhotoNext = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.taskPhotoNext = nil
+        }
     }
 
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -71,7 +74,7 @@ final class ImagesListService {
                 httpMethod: httpMethod
         )
         
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token = oAuth2TokenStorage.token else { return }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = urlSession.objectTask(

@@ -13,13 +13,14 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
+    private var oAuth2TokenStorage = OAuth2TokenStorage()
     
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage().token
+            return oAuth2TokenStorage.token
         }
         set {
-            OAuth2TokenStorage().token = newValue
+            oAuth2TokenStorage.token = newValue
         }
     }
     

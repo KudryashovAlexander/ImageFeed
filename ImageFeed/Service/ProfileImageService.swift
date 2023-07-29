@@ -15,7 +15,7 @@ final class ProfileImageService {
     
     private var avatarImage = UIImageView()
     private var currentTask: URLSessionTask?
-    
+    private var oAuth2TokenStorage = OAuth2TokenStorage.shared
     
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
@@ -28,7 +28,7 @@ final class ProfileImageService {
         var request = URLRequest.makeHTTPRequest(
             path: "/users/" + username,
             httpMethod: "GET")
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token = oAuth2TokenStorage.token else { return }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         currentTask?.cancel()

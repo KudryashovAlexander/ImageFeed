@@ -10,6 +10,7 @@ import SwiftKeychainWrapper
 
 class OAuth2TokenStorage {
     
+    static let shared = OAuth2TokenStorage()
     private let tokenKey = "BearerToken"
     
     var token: String? {
@@ -17,11 +18,12 @@ class OAuth2TokenStorage {
             return KeychainWrapper.standard.string(forKey: tokenKey)
         }
         set {
-            guard let token = newValue else {
+            guard let newToken = newValue else {
                 print("ОШИБКА! Не удалось записать токен")
                 return
             }
-            let isSuccess = KeychainWrapper.standard.set(token, forKey: tokenKey)
+            KeychainWrapper.standard.removeObject(forKey: tokenKey)
+            let isSuccess = KeychainWrapper.standard.set(newToken, forKey: tokenKey)
             guard isSuccess else {
                 print("ОШИБКА! Не удалось записать токен")
                 return
@@ -30,6 +32,11 @@ class OAuth2TokenStorage {
     }
     
     func deleteToken() {
-        let _: Bool = KeychainWrapper.standard.removeObject(forKey: tokenKey)
+        let isSuccessDeleteToken = KeychainWrapper.standard.removeObject(forKey: tokenKey)
+        if !isSuccessDeleteToken {
+            print("Токен не удален")
+        } else {
+            print("Токен удален")
+        }
     }
 }
