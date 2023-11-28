@@ -4,15 +4,17 @@ ImageFeed - это приложение для просмотра фото из 
 
 ## **Скрины приложения**
 
-<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/42520208/286325937-a28ffb84-d3ec-4dc8-a37b-33cc2312367a.png" width="200" alt="Simulator Screenshot - iPhone 15 Pro_1">
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/f37ba65e-6572-411a-944c-42868c9979ec" width="200" alt="Simulator Screenshot - iPhone 15 Pro_1">
 
-<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/76a05846-02c0-40a3-bf95-b46b84acaaf3" width="200" alt="Simulator Screenshot - iPhone 15 Pro_2">
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/5d7b5ad3-684f-406e-9361-0cd6248fd459" width="200" alt="Simulator Screenshot - iPhone 15 Pro_2">
 
-<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/04d829a3-9e7e-41fe-99d4-57d13e9bded8" width="200" alt="Simulator Screenshot - iPhone 15 Pro_3">
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/02333518-ef88-45fe-9fb7-622bcd7998a9" width="200" alt="Simulator Screenshot - iPhone 15 Pro_3">
 
-<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/35622348-4edf-41d2-9592-e61de24cc6c6" width="200" alt="Simulator Screenshot - iPhone 15 Pro_4">
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/1104e536-dc7b-43e1-93d1-55bd0d07b8f3" width="200" alt="Simulator Screenshot - iPhone 15 Pro_4">
 
-<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/0bb6759f-c9fe-4aab-83ae-e526412cd658" width="200" alt="Simulator Screenshot - iPhone 15 Pro_5">
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/d96be568-9adb-4cab-b713-c46abf3084e0" width="200" alt="Simulator Screenshot - iPhone 15 Pro_5">
+
+<img src="https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/2b29f93c-87ec-48ae-9753-7644ea35d913" width="200" alt="Simulator Screenshot - iPhone 15 Pro_6">
 
 ## **Ссылки**
 
