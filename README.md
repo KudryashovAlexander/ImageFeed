@@ -3,6 +3,7 @@
 ImageFeed - это приложение для просмотра фото из сервиса Unsplash. Пользователь авторизуется в приложении и просматривает фото. Фото возможно открыть в отдельном окне в высоком качестве. На фото можно добавлять и убирать лайки. Если пользователь закрывает приложение, данные об авторизации сохраняются и при новом открытии авторизация не требуется. Если пользователь выходит из приложения, то данные авторизации стираются.
 
 ## **Скрины приложения**
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/42520208/286325937-a28ffb84-d3ec-4dc8-a37b-33cc2312367a.png" width="500" alt="Simulator Screenshot - iPhone 15 Pro_1">
 ![Simulator Screenshot - iPhone 15 Pro_1](https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/a28ffb84-d3ec-4dc8-a37b-33cc2312367a)
 ![Simulator Screenshot - iPhone 15 Pro_2](https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/76a05846-02c0-40a3-bf95-b46b84acaaf3)
 ![Simulator Screenshot - iPhone 15 Pro_3](https://github.com/KudryashovAlexander/ImageFeed/assets/42520208/04d829a3-9e7e-41fe-99d4-57d13e9bded8)
