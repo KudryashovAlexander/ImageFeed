@@ -37,8 +37,6 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
     
     private func createAvatarImageView(image: UIImage) {
         avatarImageView.image = image
-        avatarImageView.layer.masksToBounds = true
-        avatarImageView.layer.cornerRadius = 35
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatarImageView)
         
@@ -113,9 +111,11 @@ class ProfileViewController: UIViewController, ProfileViewViewControllerProtocol
     
     func updateAvatar(url: URL) {
         avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
         avatarImageView.kf.setImage(
                 with: url,
-                placeholder: UIImage(named: "placeholder.jpg"))
+                placeholder: UIImage(named: "placeholder.jpg"),
+                options: [.processor(processor)])
         
     }
     
